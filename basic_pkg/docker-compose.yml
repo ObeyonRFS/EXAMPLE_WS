@@ -1,0 +1,39 @@
+version: '3.4'
+
+networks:
+  my_network:
+    driver: bridge
+    ipam:
+      driver: default
+
+services:
+  core_node:
+    container_name: core_node
+    restart: always
+    build:
+      context: .
+      dockerfile: Dockerfile-python-single-node
+    networks:
+      - my_network
+    environment:
+      - NODE_NAME=core_node
+  talker_node:
+    container_name: talker_node
+    restart: always
+    build:
+      context: .
+      dockerfile: Dockerfile-python-single-node
+    networks:
+      - my_network
+    environment:
+      - NODE_NAME=talker_node
+  listener_node:
+    container_name: listener_node
+    restart: always
+    build:
+      context: .
+      dockerfile: Dockerfile-python-single-node
+    networks:
+      - my_network
+    environment:
+      - NODE_NAME=listener_node
